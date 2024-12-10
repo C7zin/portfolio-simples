@@ -10,31 +10,24 @@ function toggleMenu() {
 // ======================
 document
   .getElementById("contact-form")
-  .addEventListener("submit", function (e) {
-    e.preventDefault(); // Evita que o formulário seja enviado normalmente
+  .addEventListener("submit", function (event) {
+    event.preventDefault(); // Impede o envio padrão do formulário
 
-    // Pegando os valores dos campos
+    // Captura os valores dos inputs
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const phone = document.getElementById("phone").value;
     const subject = document.getElementById("subject").value;
     const message = document.getElementById("message").value;
 
-    // Verificando se todos os campos foram preenchidos
-    if (name && email && phone && subject && message) {
-      // Exibindo a mensagem enviada
-      document.getElementById("output-name").textContent = name;
-      document.getElementById("output-email").textContent = email;
-      document.getElementById("output-phone").textContent = phone;
-      document.getElementById("output-subject").textContent = subject;
-      document.getElementById("output-message").textContent = message;
+    // Armazena os dados no localStorage (opcional)
+    const formData = { name, email, phone, subject, message };
+    localStorage.setItem("lastContactForm", JSON.stringify(formData));
 
-      // Exibindo a área com a mensagem
-      document.getElementById("message-output").style.display = "block";
+    // Mostra a mensagem de confirmação
+    document.getElementById("confirm-name").textContent = name;
+    document.getElementById("confirmation-message").classList.remove("hidden");
 
-      // Limpando os campos do formulário
-      document.getElementById("contact-form").reset();
-    } else {
-      alert("Por favor, preencha todos os campos.");
-    }
+    // Limpa o formulário
+    document.getElementById("contact-form").reset();
   });
